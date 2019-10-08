@@ -1,7 +1,8 @@
 const debug = require('debug')('log4js:kafka');
 const { Kafka } = require('kafkajs');
 
-function kafkaAppender(config, layout) {
+const kafkaAppender = (config, layout) => {
+  
   const kafka = new Kafka({
     clientId: config.clientId,
     brokers: config.brokers,
@@ -99,12 +100,9 @@ function kafkaAppender(config, layout) {
   return appender;
 }
 
-function stdoutAppender(config, layout) {
-  // This is the appender function itself
-  return (loggingEvent) => {
-    process.stdout.write(`${layout(loggingEvent, config.timezoneOffset)}\n`);
-  };
-}
+const stdoutAppender = (config, layout) => (loggingEvent) => {
+  process.stdout.write(`${layout(loggingEvent, config.timezoneOffset)}\n`);
+};
 
 const map = new Map();
 
